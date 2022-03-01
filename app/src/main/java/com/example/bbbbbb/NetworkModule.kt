@@ -11,13 +11,26 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
+    private val json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true}
+
     @Singleton
     @Provides
     fun provideLoginRetrofitService(): RetrofitService {
         return Retrofit.Builder()
-            .baseUrl("https://example.com")
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .baseUrl("https://api.github.com")
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
             .create(RetrofitService::class.java)
+    }
+    @Singleton
+    @Provides
+    fun provideDummyService(): DummyService {
+        return Retrofit.Builder()
+            .baseUrl("https://dummyapi.io/data/v1/")
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .build()
+            .create(DummyService::class.java)
     }
 }

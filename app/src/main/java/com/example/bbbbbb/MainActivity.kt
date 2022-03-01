@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.bbbbbb.loginactivity.*
-import com.example.bbbbbb.loginactivity.ui.login.LoginUserNameFragment
 import dagger.Component
 import dagger.Subcomponent
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.awaitResponse
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,20 +17,65 @@ class UserRepository @Inject constructor(
     private val localDataSource: UserLocalDataSource,
     private val remoteDataSource: UserRemoteDataSource
 ) {
-    suspend fun getUsers(page: String): Result<List<User>?> {
-        return remoteDataSource.getUsers(page)
+    suspend fun organisations(): Result<List<Organisation>?> {
+        return remoteDataSource.organisations()
+    }
+
+    suspend fun metrics(username: String, password: String): Result<Metrics?> {
+        return remoteDataSource.metrics(username, password)
+    }
+
+    suspend fun post(string: String): Result<Post?>? {
+        return remoteDataSource.post(string)
     }
 }
 
 class UserLocalDataSource @Inject constructor() {}
 class UserRemoteDataSource @Inject constructor(
-    private val loginService: RetrofitService
+    private val loginService: RetrofitService,
+    private val dummyService: DummyService
 ) {
-    suspend fun getUsers(page: String): Result<List<User>?> {
+    suspend fun organisations(): Result<List<Organisation>?> {
         return try {
-            val response = loginService.doGetUserList(page)?.awaitResponse()
+            val response = loginService.organisations()?.awaitResponse()
             if (response?.isSuccessful == true) {
-                Result.success(response.body()?.users)
+                Result.success(response.body())
+            } else {
+                Result.failure(Throwable("Error getting users, response code: ${response?.code()}"))
+            }
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
+    }
+
+    suspend fun metrics(username: String, password: String): Result<Metrics?> {
+        return try {
+            val response =
+                loginService.repositoryProfileMetrics(username, password)?.awaitResponse()
+            if (response?.isSuccessful == true) {
+                Result.success(response.body())
+            } else {
+                Result.failure(Throwable("Error getting users, response code: ${response?.code()}"))
+            }
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
+    }
+
+    suspend fun post(string: String): Result<Post?>? {
+        return try {
+            val response = dummyService.createPost(
+                CreatePost(
+                    "Example text",
+                    "image",
+                    10,
+                    listOf("tag"),
+                    "60d0fe4f5311236168a109ca"
+                ),
+                string
+            )?.awaitResponse()
+            if (response?.isSuccessful == true) {
+                Result.success(response.body())
             } else {
                 Result.failure(Throwable("Error getting users, response code: ${response?.code()}"))
             }
