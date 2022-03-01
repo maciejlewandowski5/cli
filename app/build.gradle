@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
+
 def getLocalProperties() {
     Properties props = new Properties()
     if (file('../local.properties').exists()) {
@@ -11,6 +12,7 @@ def getLocalProperties() {
     }
     return props
 }
+
 android {
     compileSdk 32
 
@@ -31,10 +33,10 @@ android {
         }
     }
     flavorDimensions "default"
-    productFlavors{
+    productFlavors {
         preproduction {
             Properties localProperties = getLocalProperties()
-            resValue "string", "API_KEY", localProperties["API_KEY"]
+            resValue "string", "API_KEY", System.getenv("API_KEY") ?: localProperties["API_KEY"]
         }
     }
     compileOptions {
