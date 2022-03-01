@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ac_nav_graph"
+    app:startDestination="@id/MFragment">
+    <fragment
+        android:id="@+id/MFragment"
+        android:name="com.example.bbbbbb.MFragment"
+        android:label="fragment_m"
+        tools:layout="@layout/fragment_m" >
+        <action
+            android:id="@+id/action_MFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.bbbbbb.loginactivity.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+</navigation>
