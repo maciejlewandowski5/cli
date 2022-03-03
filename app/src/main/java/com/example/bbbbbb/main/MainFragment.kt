@@ -1,4 +1,4 @@
-package com.example.bbbbbb
+package com.example.bbbbbb.main
 
 import android.content.Context
 import android.os.Bundle
@@ -6,27 +6,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
-import com.example.bbbbbb.databinding.FragmentLoginPasswordBinding
-import com.example.bbbbbb.databinding.FragmentMBinding
-import com.example.bbbbbb.loginactivity.LoginActivity
-import com.example.bbbbbb.loginactivity.LoginViewModel
+import com.example.bbbbbb.R
+import com.example.bbbbbb.databinding.FragmentMainBinding
 import javax.inject.Inject
 
 
-class MFragment : Fragment() {
-    private var _binding: FragmentMBinding? = null
-
+class MainFragment : Fragment() {
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModel: ViewModel
+    lateinit var mainViewModel: MainViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,14 +37,5 @@ class MFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener() {
             findNavController().navigate(R.id.action_MFragment_to_loginActivity)
         }
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MFragment().apply {
-
-            }
     }
 }

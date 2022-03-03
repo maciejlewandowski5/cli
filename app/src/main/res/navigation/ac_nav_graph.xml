@@ -6,16 +6,16 @@
     app:startDestination="@id/MFragment">
     <fragment
         android:id="@+id/MFragment"
-        android:name="com.example.bbbbbb.MFragment"
+        android:name="com.example.bbbbbb.main.MainFragment"
         android:label="fragment_m"
-        tools:layout="@layout/fragment_m" >
+        tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_MFragment_to_loginActivity"
             app:destination="@id/loginActivity" />
     </fragment>
     <activity
         android:id="@+id/loginActivity"
-        android:name="com.example.bbbbbb.loginactivity.LoginActivity"
+        android:name="com.example.bbbbbb.stats.LoginActivity"
         android:label="activity_login"
-        tools:layout="@layout/activity_login" />
+        tools:layout="@layout/activity_stats" />
 </navigation>

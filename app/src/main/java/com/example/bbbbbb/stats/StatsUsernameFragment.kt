@@ -1,29 +1,25 @@
-package com.example.bbbbbb.loginactivity.ui.login
+package com.example.bbbbbb.stats
 
 import android.content.Context
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.navigation.fragment.NavHostFragment
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.navigation.fragment.findNavController
 import com.example.bbbbbb.R
-import com.example.bbbbbb.databinding.FragmentLoginUserNameBinding
-import com.example.bbbbbb.loginactivity.LoginActivity
-import com.example.bbbbbb.loginactivity.LoginViewModel
+import com.example.bbbbbb.databinding.FragmentStatsUserBinding
 import javax.inject.Inject
 
-
-class LoginUserNameFragment : Fragment() {
+class StatsUsernameFragment : Fragment() {
 
     @Inject
-    lateinit var loginViewModel: LoginViewModel
-    private var _binding: FragmentLoginUserNameBinding? = null
+    lateinit var statsViewModel: StatsViewModel
+    private var _binding: FragmentStatsUserBinding? = null
 
     private val binding get() = _binding!!
 
@@ -36,35 +32,40 @@ class LoginUserNameFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentLoginUserNameBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentStatsUserBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val usernameEditText = binding.username
-        val loginButton = binding.login
-        val loadingProgressBar = binding.loading
+        setOnEditListener(binding.username)
+        setOnClickListener(binding.login, binding.loading, binding.username)
+    }
 
+    private fun setOnEditListener(usernameEditText: EditText) {
         usernameEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.setUsername(
+                statsViewModel.setUsername(
                     usernameEditText.text.toString(),
                 )
             }
             false
         }
+    }
 
+    private fun setOnClickListener(
+        loginButton: Button,
+        loadingProgressBar: ProgressBar,
+        usernameEditText: EditText
+    ) {
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.setUsername(
+            statsViewModel.setUsername(
                 usernameEditText.text.toString(),
             )
-findNavController().navigate(R.id.action_loginUserNameFragment_to_loginPasswordFragment)
+            findNavController().navigate(R.id.action_loginUserNameFragment_to_loginPasswordFragment)
         }
     }
 

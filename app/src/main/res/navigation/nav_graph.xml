@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/loginUserNameFragment"
-        android:name="com.example.bbbbbb.loginactivity.ui.login.LoginUserNameFragment"
+        android:name="com.example.bbbbbb.stats.StatsUsernameFragment"
         android:label="fragment_login_password"
-        tools:layout="@layout/fragment_login_password" >
+        tools:layout="@layout/fragment_stats_repo" >
         <action
             android:id="@+id/action_loginUserNameFragment_to_loginPasswordFragment"
             app:destination="@id/loginPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginPasswordFragment"
-        android:name="com.example.bbbbbb.LoginPasswordFragment"
+        android:name="com.example.bbbbbb.stats.StatsRepoFragment"
         android:label="LoginPasswordFragment" >
         <action
             android:id="@+id/action_loginPasswordFragment_to_mainActivity2"
@@ -24,7 +24,7 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity2"
-        android:name="com.example.bbbbbb.MainActivity"
+        android:name="com.example.bbbbbb.main.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
 </navigation>
